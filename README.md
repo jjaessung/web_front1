@@ -5,7 +5,7 @@
 - 연락처: rlawotjd03@naver.com
 - GitHub: https://github.com/jjaessung
 - 저장소 URL: https://github.com/jjaessung/web_front1
-- 배포 예정 URL: https://jjaessung.github.io/web_front1/ (배포 확인 중)
+- 배포 URL: https://jjaessung.github.io/web_front1/
 
 ## 실행
 
@@ -80,3 +80,7 @@ images/profile.svg          이니셜 프로필 일러스트
 ## 핵심 개념
 
 시맨틱 태그는 콘텐츠 역할을 브라우저와 보조 기술에 전달합니다. Flexbox는 네비게이션처럼 한 방향 정렬에, Grid는 여러 행·열로 구성하는 프로젝트 카드에 사용했습니다. querySelector로 선택한 DOM에 addEventListener로 이벤트를 연결하고 상태를 변경한 뒤 render 함수가 화면을 갱신합니다. async/await는 비동기 응답을 기다리는 코드를 읽기 쉽게 표현하며 try/catch/finally가 성공·실패·후처리를 담당합니다.
+
+## 배포 확인 기록 (2026-10-26)
+
+GitHub Actions 배포 성공과 공개 페이지 및 CSS, JavaScript, 프로필 SVG의 HTTP 200 응답을 터미널에서 확인했습니다. 인증 없는 GitHub 저장소 API도 정상 응답했습니다. 브라우저 화면 검증 및 데스크톱/모바일/다크 모드 스크린샷은 아직 완료하지 않았습니다.

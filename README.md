@@ -1,326 +1,332 @@
-순수 HTML / CSS / JavaScript(바닐라 JS)로 제작한 반응형 포터 웹사이트입니다. 외부 프레임워크·라이브러리 없이 시맨틱 마크업, CSS 기반 다크 소스, GitHub API 캐스팅을 직접 구현했습니다.
+﻿# 김재성의 웹 포트폴리오
 
-사용 기술
-HTML5 (시맨틱 태그: header, nav, main, section, article, footer)
-CSS3(CSS 반응형, Flexbox, Grid, 미디어 쿼리 기반 반응형)
-바닐라 자바스크립트 (ES6 이상, fetch/ async-await, IntersectionObserver, localStorage)
-GitHub REST API( /repos/{username}/{repo}—휴대용 개인 조회)
-구글 폰트(스페이스 그로테스크, 인터)
-주요 기능
-다크 모드 토글 (localStorage에 저장되어 새로고침 보호 유지, 시스템 다크 모드 감지 지원)
-모바일 메뉴 ( classList.toggle('active'))
-단순함량함량
-스크롤 위치에 따라 내비게이션 변경 / 스크롤 탑 버튼
-IntersectionObserver기반 섹션은 애니메이션
-GitHub API로 목록을 볼 때 프로젝트 섹션에 뭉쳐서 (로딩 / 성공 / / 빈상태 UI 처리)
-언어별 프로젝트 위치 ( Array.prototype.filter)
-미사일 포맷에 문의하세요 (필수값, 이메일 형식, 필드별 메시지)
-히어로 섹션 타이핑 효과
-기준값 (Threshold) 문서화
-요소	값	위치
-스크롤 탑 버튼 카테고리	300px	js/main.js→SCROLL_TOP_THRESHOLD
-배경화면 변경 기준	60px	js/main.js→NAV_SCROLL_THRESHOLD
-스크롤 애니메이션 IntersectionObserver 임계값	0.2	js/main.js→REVEAL_THRESHOLD
-폴더 구조
-introduce_website/
-├── index.html
+HTML, CSS, JavaScript로 만든 반응형 개인 포트폴리오입니다. 외부 프레임워크와 라이브러리 없이 화면 구성, 다크 모드, GitHub 프로젝트 조회, 문의 폼 검증을 구현했습니다.
+
+## 목차
+
+- [사용 기술](#사용-기술)
+- [주요 기능](#주요-기능)
+- [실행 방법](#실행-방법)
+- [폴더 구조](#폴더-구조)
+- [설정과 동작 기준](#설정과-동작-기준)
+- [학습 노트](#학습-노트)
+
+## 사용 기술
+
+| 기술 | 사용 목적 |
+| --- | --- |
+| HTML5 | 시맨틱 마크업, 페이지 구조, 접근성 속성 |
+| CSS3 | Flexbox, Grid, CSS 변수, 반응형 레이아웃, 전환 효과 |
+| JavaScript | DOM 조작, 이벤트 처리, 상태 관리, 비동기 요청 |
+| GitHub REST API | 공개 저장소 목록과 프로젝트 정보 조회 |
+| 브라우저 API | `localStorage`, `IntersectionObserver`, `matchMedia`, `AbortController` |
+
+## 주요 기능
+
+| 기능 | 설명 |
+| --- | --- |
+| 다크 모드 | 시스템 설정을 초기값으로 사용하고, 선택한 테마를 `localStorage`에 저장 |
+| 모바일 메뉴 | 메뉴 열기·닫기, 바깥 영역 클릭 및 Escape 키로 닫기 |
+| 페이지 이동 | 섹션 링크의 부드러운 스크롤과 이동 후 포커스 처리 |
+| 스크롤 UI | 헤더 스타일 변경, 맨 위로 이동 버튼 표시 |
+| 섹션 애니메이션 | 화면에 들어온 섹션을 `IntersectionObserver`로 감지해 표시 |
+| GitHub 프로젝트 | 공개 저장소를 페이지별로 조회하고 언어별로 필터링 |
+| 요청 상태 표시 | 로딩, 오류, 빈 결과 안내와 재시도 버튼 |
+| 문의 폼 검증 | 이름·이메일·메시지 필수 입력과 이메일 형식 검사 |
+| 접근성 | 본문 바로 가기, 키보드 포커스, ARIA 상태, 모션 감소 설정 지원 |
+
+> 문의 폼은 입력 검증을 위한 데모입니다. 메시지를 실제로 전송하지 않으며, 문의는 페이지의 이메일 링크를 이용합니다.
+
+## 실행 방법
+
+1. 저장소를 내려받습니다.
+2. 브라우저에서 `index.html`을 엽니다. 별도의 설치나 빌드 과정은 없습니다.
+3. 프로젝트 목록을 불러오려면 인터넷 연결이 필요합니다.
+
+GitHub API 요청에 실패하면 화면의 **다시 시도** 버튼으로 재요청할 수 있습니다.
+
+## 폴더 구조
+
+```text
+Web_Front/
+├── .github/           # GitHub 설정 및 워크플로
 ├── css/
-│   └── style.css
-├── js/
-│   └── main.js
+│   └── style.css      # 레이아웃, 테마, 반응형 스타일
 ├── images/
-│   └── profile.svg
+│   └── profile.svg    # 프로필 일러스트 및 파비콘
+├── js/
+│   └── main.js        # 이벤트, 상태 관리, GitHub API, 폼 검증
+├── index.html         # 페이지 구조와 콘텐츠
+├── prompt.md          # 프로젝트 관련 프롬프트
 └── README.md
-정리 노트
-일단, html은 구조/내용, css는 스타일, js는 이벤트를 처리함
+```
 
-1. HTML, CSS, JS가 어떻게 서로 연결되는지
-html<->css는 <link rel="stylesheet" href="css/style.css" />로, html의 head에서, HTML ← JS는 <script src="js/main.js" defer></script>에서 <body>의 끝( </body>)에서 불려옴
+## 설정과 동작 기준
 
-CSS/JS가 HTML의 "어떤 요소"를 표시하는 **선택자(selector)**로 연결 즉 HTML에 태그 id="theme-toggle", CSS는 #theme-toggle로 스타일을 강조, JS는 getElementById("theme-toggle")로 그 버튼을 클릭하여 이벤트를 연결하는 방식
+### GitHub 계정 변경
 
-2. HTML
-<> 내부에 포함된 의미
-태그 이름 (header) — 이 요소가 "무엇인지"를 정함 (의미/역할)
-시맨틱 - 이름이 스스로가 역할을 하고 있습니다.
-레이아웃:<header> <nav> <main> <section> <article> <aside> <footer>
-컨텐츠용: <h1>~<h6>(제목) <p>(문단) <ul>/<li>(목록) <img>(이미지) <button>(버튼) <form>(폼) <a>(링크)
-비시맨틱 - <div>, <span>의미 없는 그냥 "Box". 역할은 class/id로 설명해야 함
-속성(속성) (key="value"형태) — 그 요소에 대한 부가 정보. 뭐 재산이 목적이니까
-요소	역할
-ID, 클래스	구분/이름표(CSS·JS가 결함이 있을 수 있게)
-href	링크가 실제로 있는 주소
-src	실제로 파일을 불러오는 방법
-유형	요소의 동작 방식을 동작시키거나, 버튼 모양 설정 ex) <button type="submit">신청서를 제출하는 것과 같이
-플레이스홀더	입력창에 보이는 안내 문구
-alt	대체 텍스트(로드하지 않고 대신 대체 텍스트, 스크린 리더가 장애를 인에게 전달하는 텍스트)
-aria-*	접근하는 정보(시각·청각 장애가 있는 사용자가 스크린 리더 등을 지원하는 웹을 좀 수 있게 돕는 정보) ex) aria-label="다크 모드 전환"→ 화면엔 이모지만 하지만, 스크린 리더는 이 부분을 읽어줌 / aria-pressed="false"→ 이 버튼이 지금 눌린 상태인지 알릴 때 줌(JS가 클릭할 때마다마다)
-시맨틱 태그를 사용하는 이유
-기본적으로는 전체적으로 <div id="header">, <div id="nav">마치 의미 없는 <div>id 구분 구분 기호입니다. 브라우저/스크린리더/검색 엔진에는 "얘가 헤더인지 그냥 상자인지" 알 수 없습니다.
+[`js/main.js`](js/main.js)의 `CONFIG.github`을 수정하면 해당 계정의 공개 저장소를 가져옵니다.
 
-<div id="header">vs <header>는 외관보기(화면)는 쯔을 수 있지만, <header>"나는 헤더다"라는 의미를 브라우저·검색엔진(SEO)·스크린리더에게 직접 전달함. id는 그 태그가 승리 없이도 이름이 있고, 의미 자체는 태그 이름이 담당합니다.
+```js
+const CONFIG = { github: 'jjaessung' };
+```
 
-클래스 vs ID 차이
-구분	ID	클래스
-요소 제한	페이지에서 1개만 (유일해야 함)	다양한 요소를 재활용할 수 있음
-용도	특정 요소를 콕콕 가리킬 때 (JS가 자주 씀)	스타일을 여러 요소에 반복 적용할 때(CSS가 자주 씀)
-JS 조회	getElementById("theme-toggle")	getElementsByClassName/querySelectorAll
-<span class="hamburger-bar">가 3개 스타일 전체적으로 같은 클래스라 CSS 한 번에 적용. 반면 id="hamburger"에 그 버튼은 하나뿐입니다.
+사용하는 API 경로는 다음과 같습니다. 한 페이지에 최대 100개를 요청하고, 응답의 `Link` 헤더에 다음 페이지가 있으면 이어서 조회합니다.
 
-레이블의 for-id 매칭
-label의 for="name"과 input의 id="name"것을 동일하게 반대서 서로 연결함.
+```text
+GET https://api.github.com/users/{username}/repos?sort=updated&per_page=100&page={page}
+```
 
-< label  for =" name " > 이름 </label> < input type =" text " id = " name " name =" name " / >
- 
-모바일에서 특정 유틸리티를 클릭하여 입력창에 포커스가 있는 방식으로 연결해 보세요.
+### 화면과 요청 기준
 
-3. CSS
-Flexbox와 Grid의 차이
-플렉스박스	그리드
-방향	1차원(가로 또는 세로, 한 줄)	2차원 (가로+세로 동시에 배치/열 콕)
-적절한 경우	줄 하나에 요소들을 포함하고/정렬할 때	여러 줄·여러 칸으로 표를 짜듯 배치할 때
-크기 결정	분수에 따라 유연하게 남	미리 캔(열/행) 구조를 딱 정해놓고 채움
-한 줄로 요약하면: Flex = 한방향으로 최적 조정기, Grid = 쏠(표) 짜기.
+| 항목 | 기준 | 구현 위치 |
+| --- | --- | --- |
+| 헤더 스타일 변경 | 스크롤 위치 60px 이상 | `js/main.js` → `renderScroll` |
+| 맨 위로 이동 버튼 | 스크롤 위치 300px 이상 | `js/main.js` → `renderScroll` |
+| 섹션 표시 애니메이션 | 요소의 20%가 화면에 진입 | `js/main.js` → `threshold: 0.2` |
+| GitHub 요청 제한 시간 | 전체 조회에 15초 | `js/main.js` → `loadProjects` |
+| 태블릿 레이아웃 | 화면 너비 768px 이상 | `css/style.css` → 미디어 쿼리 |
+| 데스크톱 크기 조정 | 화면 너비 1024px 이상 | `css/style.css` → 미디어 쿼리 |
 
-우리 프로젝트에서는 위 메뉴를 Flexbox로 짜고, projects, Skills카드를 Grid로 샴
+## 학습 노트
 
-스킬카드 : 카드를 여러 개 동시에 블록으로 배치해야 합니다(모바일 1열 → 데스크톱 3열), 열과 함께 작업할 수 있는 네트워크를 관리하고 네트워크 그리드를 사용합니다.
+아래 예시는 구현 원리를 설명하기 위해 일부를 간추린 코드입니다. 전체 동작은 [`index.html`](index.html), [`css/style.css`](css/style.css), [`js/main.js`](js/main.js)에서 확인할 수 있습니다.
 
-.skills -groups { display : grid; grid-template-columns :  1 fr ; }
-프로젝트 카드 : GitHub API로 몇 가지 프로젝트가 올지 모르는 상황(개수 가변) → auto-fit으로 줄어들게 하기 위해 카드 변형을 자동으로 힘쓰게 함. 이러한 "반응형 카드 그리드"는 Flex로도 억지로 가능하지만 Grid의 auto-fit/minmax 조합은 훨씬 간단하고 신뢰할 수 있습니다
+### 1. HTML · CSS · JavaScript 연결
 
-.projects -grid {
-   display : grid;
-   grid-template-columns :  repeat (auto-fit ,  minmax ( 260 px ,  1 fr ));
+- **HTML**은 페이지의 구조와 내용을 정의합니다.
+- **CSS**는 색상, 크기, 배치와 같은 스타일을 담당합니다.
+- **JavaScript**는 사용자 이벤트에 반응하고 상태와 화면을 갱신합니다.
+
+```html
+<link rel="stylesheet" href="css/style.css">
+<script src="js/main.js" defer></script>
+```
+
+현재 프로젝트는 두 태그를 `<head>`에 둡니다. 외부 스크립트의 `defer`는 HTML 파싱과 함께 파일을 내려받고, 파싱이 끝난 뒤 실행하도록 합니다. 따라서 스크립트에서 DOM 요소에 접근할 수 있습니다.
+
+### 2. HTML의 의미와 접근성
+
+<details>
+<summary>시맨틱 태그, 속성, ID와 클래스</summary>
+
+#### 시맨틱 태그
+
+`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`는 콘텐츠의 역할을 나타냅니다. `<div>`와 `<span>`은 자체적으로 특정한 의미를 갖지 않는 범용 요소입니다.
+
+`<header>`는 태그 자체로 의미를 전달합니다. `<div id="header">`의 `id`는 요소를 식별하는 이름이며, 시맨틱 태그의 의미를 대신하지 않습니다.
+
+#### 주요 속성
+
+| 속성 | 역할 |
+| --- | --- |
+| `id`, `class` | CSS와 JavaScript에서 요소를 선택하는 이름 |
+| `href` | 링크의 목적지 |
+| `src` | 이미지나 스크립트 등 리소스의 주소 |
+| `type` | 버튼이나 입력 요소의 종류 |
+| `placeholder` | 입력 예시나 힌트. 레이블을 대신하지 않음 |
+| `alt` | 이미지의 대체 텍스트 |
+| `aria-label` | 요소의 접근 가능한 이름 |
+| `aria-pressed` | 토글 버튼의 눌림 상태 |
+| `aria-expanded` | 메뉴 등의 펼침 상태 |
+
+#### ID와 클래스
+
+| 구분 | ID | 클래스 |
+| --- | --- | --- |
+| 사용 범위 | 문서 안에서 고유한 값 | 여러 요소에서 재사용 가능 |
+| CSS 선택자 | `#nav-menu` | `.theme-toggle` |
+| JavaScript 조회 | `getElementById('nav-menu')` | `querySelectorAll('.reveal')` |
+
+#### 레이블과 입력창 연결
+
+`label`의 `for`와 입력창의 `id`를 일치시키면 레이블을 눌러 입력창에 포커스를 줄 수 있습니다.
+
+```html
+<label for="name">이름</label>
+<input type="text" id="name" name="name">
+```
+
+</details>
+
+### 3. CSS 레이아웃과 반응형 디자인
+
+<details>
+<summary>Flexbox, Grid, CSS 변수, 다크 모드와 애니메이션</summary>
+
+#### Flexbox와 Grid
+
+| 구분 | Flexbox | Grid |
+| --- | --- | --- |
+| 배치 기준 | 주로 한 방향의 정렬 | 행과 열을 함께 구성 |
+| 활용 예 | 내비게이션, 버튼 묶음 | 기술 카드, 프로젝트 카드 |
+
+프로젝트 카드에는 다음 스타일을 사용합니다.
+
+```css
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 20px;
 }
-**참고로 minmax는 minmax(최소, 최대) — 그리드의 각 칸(열) 크기 범위를 대상으로 하는 문의
+```
 
-최소 260px: 칸이 이보다 지면 안니(카드가 찌그러지는 걸 방지)
-최대 1fr: 광대한 공간이 있으면 좋겠습니다(fraction)
-둘 말고도
+- `auto-fit`: 공간에 맞춰 열 개수를 자동으로 조절합니다.
+- `min(100%, 280px)`: 좁은 화면에서는 컨테이너 너비를 넘지 않도록 합니다.
+- `1fr`: 남은 공간을 열들이 나누어 사용합니다.
 
-block / inline / inline-block: 본체 배치
-위치: 원하는 위치에 직접 배치(상대, 절대, 고정, 고정)
-float: 옛 방식, 현재는 주 제목을 잘 이해하기 위한 글
-요즘의 방식은 잘 안씀
+`block`, `inline`, `inline-block`은 기본 배치 방식이며, `position`은 요소의 위치를 조절합니다. `float`은 이미지 주변으로 텍스트가 흐르게 할 때 사용할 수 있습니다.
 
-CSS 변수(:root)
-css 가변(:root)은 자주 쓰는 값(색상, 덤불, 그림자 등)에 이름 코팅서 한곳에 저장해 두고, 나머지 css전체에서 그 이름으로 꺼내쓰는 기호
+#### CSS 변수와 다크 모드
 
-: 루트 {
-   --color-primary :  # 4f46e5 ;    /* --이름: 값; 형태의 정의 */ 
-  --space-md :  1.5 rem ;
+CSS 변수에 색상과 간격 등의 값을 모아두고 `var()`로 사용합니다. 다음은 개념 예시입니다.
+
+```css
+:root {
+  --bg: #ffffff;
+  --text: #222222;
 }
-이러한 식으로 정의하는 것에 CSS가 있습니다.
 
-.btn -primary { background-color :  var ( --color-primary ); }
-이런식으로 꺼낼 수 있음
-
-다크모드 변수 ([data-theme="dark"])
-동일한 이름에 대해, 다크 모드용 값을 별도의 블록에서 다시 정의합니다.
-
-[ data-theme = "dark" ] {
-   --color-bg :  # 0f1015 ;
-   --color-bg-alt :  # 17181f ;
-   --color-text :  # f2f2f5 ;
+[data-theme="dark"] {
+  --bg: #111111;
+  --text: #eeeeee;
 }
-JS가 <html data-theme="dark">마치 속성만 패드면( main.js:28 ), 이 활동을 하는 CSS 규칙 전체가 자동으로 새 값으로 교체돼서 전체 화면이 한 번에 다크 모드로 바뀜.
 
-반응형 디자인 (모바일 퍼스트 / 768px, 1024px / 부활)
-HTML/CSS파일은 하나인데, 정리에 따라 배열이 자동으로 다르게 만드는 것입니다
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+```
+
+JavaScript가 `<html>`의 `data-theme` 값을 변경하면 해당 테마의 변수가 적용됩니다.
+
+#### 모바일 퍼스트
+
+기본 스타일을 작은 화면에 맞춰 작성하고, 화면이 넓어질 때 미디어 쿼리로 확장합니다. 기술 카드는 기본 1열이며 768px 이상에서 3열로 바뀝니다.
+
+```css
+.skills-grid {
+  display: grid;
+  gap: 16px;
+}
 
 @media (min-width: 768px) {
- 768px이면, 이 중괄호 안의 CSS 규칙을 적용합니다.
+  .skills-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
-CSS는 존재한다는 것을 가지고 있습니다 => 부정에 모바일 개념으로 스타일을 짜고, 하위로 커질 때 가치가 있기 때문에 구현함(모바일 퍼스트) 모바일 탄성 메뉴 축소 만듦새
+```
 
-/* ① 기본값 (미디어쿼리 없음 = 모든 화면에 항상 적용되는 "바탕") */
-.hamburger { display: flex; }         /* style.css:290 */
-.nav-menu  { position: fixed; max-height: 0; overflow: hidden; } /* style.css:324-336 */
+#### 전환과 스크롤 효과
 
-/* ② 768px 이상일 때, ①을 덮어씀 */
-@media (min-width: 768px) {
-  .hamburger { display: none; }
-  .nav-menu  { position: static; flex-direction: row; max-height: none; }
-}
+- `:hover`: 마우스가 요소 위에 있을 때의 스타일입니다.
+- `transition`: 스타일 변화가 일정 시간에 걸쳐 일어나도록 합니다.
+- `box-shadow`: 요소에 그림자를 추가합니다.
+- `scroll-behavior: smooth`: 앵커 이동 등에 부드러운 스크롤을 적용합니다.
 
-/* ③ 1024px 이상일 때, 추가로 세부 크기만 더 조정 (레이아웃 구조는 그대로) */
-@media (min-width: 1024px) {
-  .section-inner { padding: 0 var(--space-lg); }
-}
-호버/트랜지션/박스섀도우
-hover - 마우스가 그 요소 위에 있을 수 있도록 적용되는 상태 선택자 전환 - 값을 축소할 수 있도록 허용함 box-shadow - 요소에 수평 확장 속성, 카드에 적용
+현재 섹션 링크는 JavaScript의 `scrollIntoView()`로 이동과 포커스를 함께 처리합니다. 섹션 표시 효과는 `IntersectionObserver`와 `.reveal.is-pending`, `.reveal.is-visible` 클래스로 구현합니다. 사용자 설정이 모션 감소인 경우 애니메이션을 줄입니다.
 
-심플리
-html {
-   scroll-behavior : smooth; /* style.css:84 */ 
-}
-html요소에 이 한 줄만 추가하면, 항해의 앵커 링크( href="#about"등)를 클릭했을 때 순간이동을 촉진하여 스크롤 이동함. JS 없이 CSS만 처리합니다.
+</details>
 
-스크롤(교차로 관찰자)
-class="reveal"이 섹션은 섹션 화면에 20% 이상 is-visible코팅 클래스를 코팅서들이 서서히 하야는 애니메이션을 발동시킴입니다.
+### 4. JavaScript 이벤트와 상태 관리
 
+<details>
+<summary>DOM, 변수, 함수, 배열 처리와 화면 갱신</summary>
 
-// main.js:110-131 const  revealTargets  =  document.querySelectorAll ( '.reveal ' ) ;
+#### DOM과 이벤트
 
-constobserver  = new IntersectionObserver ( ( entrys ) => { entries .forEach ( ( entry ) = > { if ( entry .isIntersecting ) { entry .target .classList .add ( ' is -visible' )  ; 관찰자 .unobserve ( entry .target ) ; // 한 번 클러스터 요소는 중지 } } ) ; } , { 임계 값 : 0.2 } // 요소 의 20% 이상 보이면 발동 ) ;  
-    
-      
-        
-        
-         
-      
-    
-  
-     
+DOM은 브라우저가 HTML을 해석해 만든 트리 구조입니다. JavaScript는 이 구조에서 요소를 찾고, 속성과 내용을 변경합니다.
 
+```js
+const themeButton = document.querySelector('.theme-toggle');
 
-revealTargets.forEach ( ( target ) = > observer.observe ( target ) ) ;​​​  
-IntersectionObserver"이 요소가 화면에 전혀 보이지 않는지"라는 것은 브라우저가 존재하지 않는 기능입니다. 스크롤 이벤트를 직접적으로 부하하는 것보다 성능이 유지됩니다. CSS 내부에는 .reveal(기본 숨김/이동 상태)과 .reveal.is-visible(표시 상태로 전환) 두 클래스로 실제 애니메이션 정의가 있습니다.
+themeButton.addEventListener('click', () => {
+  state.theme = state.theme === 'dark' ? 'light' : 'dark';
+  renderTheme();
+});
+```
 
-4. JS
-연기하다
-defer 외부 서부로 브라우저가 HTML을 위에서 아래로 읽은 <script>태그를 만나 HTML 읽기를 가져오기 JS 파일을 다운로드+실행한 뒤에 야 나머지 HTML을 전부 읽습니다. 두 가지의 문제가 발생하는 현상:
+`querySelector()`는 요소를 찾고, `addEventListener()`는 이벤트가 발생했을 때 실행할 콜백을 등록합니다. 콜백은 등록 즉시 실행되는 것이 아니라 사용자가 버튼을 클릭할 때 실행됩니다.
 
-JS 파일이 크면 동안 화면이 안 그려짐(백지 상태)
-펼쳐져 있지 않은 분량의 작은 요소를 querySelector로 부품면 → null (DOM에 아직 남아 있지 않으니까)
-defer를 접착면: "이 파일은 다운로드는 지금 배경에서 해두되, 실행은 HTML을 전체적으로 다 읽어 DOM이 완성된 뒤에 서버됩니다."
+#### 변수와 함수
 
-const / var
-JS에서 모두 함께 노력하겠습니다. var는 같은 이름으로 또 선언해도 안 남 → 주장로 ks써도 못 알아챌 수 있음 재미있는 날
+- `const`: 변수에 다른 값을 다시 대입할 수 없습니다. 객체 내부의 속성은 변경할 수 있습니다.
+- `let`: 값이 바뀌는 변수에 사용하며 블록 범위를 가집니다.
+- `var`: 함수 범위를 가지며 같은 범위에서 재선언할 수 있습니다.
+- 화살표 함수: `const renderTheme = () => { ... };` 형태로 함수를 정의합니다.
+- `DOMContentLoaded`: HTML 파싱과 지연 스크립트 실행이 끝났을 때 발생하는 이벤트입니다. 현재 코드는 `defer`로 로드되어 최상위에서 초기화를 수행합니다.
 
-DOMContentLoaded
-호출은 마지막에 DOMContentLoaded 호출에 서 호출(페이지 열릴 때 호출되는)
+#### 템플릿 리터럴과 구조 분해
 
-DOM
-DOM : 브라우저가 HTML을 파싱(해석)하면서 <header>, <h1>, <button>같은 태그 하나를 연합으로 가져가고, 부모-자식 관계를 트리 구조로 묶는 게 DOM입니다.
+백틱으로 감싼 문자열에는 `${표현식}`을 넣을 수 있습니다. 구조 분해는 객체나 배열의 값을 변수로 꺼내는 문법입니다.
 
-페이지 로드 → DOM 생성됨( <button id="theme-toggle">이 제공로 존재)
-initTheme() 실행 → querySelector로 그를 통해 themeToggle을 확인하기
-addEventListener로 "클릭 경고"를 코팅하는 것은 일단 끝남 (대기 상태)
-... (사용자가 언제든지 나 버튼을 클릭하세요)
-브라우저가 클릭을 감지 → 등록해 버린 콜백 함수를 실행 → applyTheme() 호출 → 화면 색 바뀜
-화살표함수
+```js
+const { status, repos, filter } = state.projects;
+const message = `프로젝트 ${repos.length}개`;
+const language = repos[0]?.language ?? '기타';
+```
 
-// 기존 방식 function  applyTheme ( theme )  {  root.setAttribute ( ' data-theme' , theme ) ; }  
+`??`는 왼쪽 값이 `null` 또는 `undefined`일 때 오른쪽 값을 사용합니다.
 
-// 화살표 
-const  applyTheme  =  ( theme )  =>  {  root . setAttribute ( '데이터 테마' ,  테마 ) ;  } ;
-한줄로고 복귀 가능
+#### 배열 메서드
 
-템플릿
-백틱( `)으로 문자열을 감싸면 내부에 ${표현식}끼워 넣어서 HTML을 생성할 수 있습니다. 따옴표( '...')로 문자열을 연결하는 것보다 훨씬 짧고 읽기 쉬움.
+| 메서드 | 역할 | 예시 |
+| --- | --- | --- |
+| `map()` | 각 요소를 변환해 새 배열 생성 | `repos.map(({ language }) => language)` |
+| `filter()` | 조건을 만족하는 요소로 새 배열 생성 | `repos.filter((repo) => repo.language === 'JavaScript')` |
+| `forEach()` | 각 요소에 작업 수행 | `buttons.forEach((button) => button.focus())` |
 
-// main.js:167-177 
-const  buildProjectCard  =  ( { 이름 , 설명 ,  html_url : url ,  stargazers_count : 별 , 언어 } )  =>  ` 
-  <article class="project-card" data-언어=" ${ 언어  ??  '' } "> 
-    <h3> ${ 이름 } </h3> 
-    <p> ${ 설명  ??  '설명이 없는 것입니다.' } </p> 
-<a href=" ${ url } " target="_blank" rel="noopener noreferrer">     GitHub에서 보기 →</a> 
-  </article> 
-` ;
-${}그 안에는 저항하는 것뿐만 아니라 language ?? ''유사하게 작용할 수도 없습니다( ??는 null 독립 반대: null/정의되지 않은 일이 있고 사용할 수 있습니다).
+#### 상태 → 화면 갱신
 
-구조분해 배치 (Destructuring)
-배열 안의 값을 하나씩 선택하고, 한 번에 모아서 "뽑아내는" 소리, 여러 값을 한 번에 꺼낼 때 코드가 훨씬 더 많습니다.
+현재 프로젝트는 테마, 메뉴, 프로젝트, 폼 상태를 `state` 객체에 저장합니다.
 
-//구조 분리 없이 
-const  repos  =  projectsState . 저장소 ; 
-const  activeLanguage  =  projectsState . 활성언어 ;
+```text
+사용자 이벤트 또는 API 응답
+  → state 변경
+  → render 함수 호출
+  → DOM 갱신
+```
 
-//구조 분해별로 (main.js:256) 
-const  { repos , activeLanguage }  =  projectsState ;
-배열 방식 맵/필터
-배열(리스트) 전체를 나열할 때 반복문 대신에 쓰는, "한 줄로 배열 변환/추리기" 구문.
+프로젝트 조회의 `status`는 `loading`, `success`, `error` 중 하나입니다. 빈 결과는 별도 상태 문자열 대신 저장소 배열 또는 필터 결과의 길이로 판단합니다.
 
-map: 배열의 각 요소를 다른 값으로 변환해서, 같은 변형의 새 배열을 만듦.
-// [main.js:189] repos(저장소 배열) → 언어만 뽑은 문자열 배열로 "변환" 
-repos . map ( ( { 언어 } )  =>  언어 ) 
-// [{이름:'A', 언어:'JS'}, {이름:'B', 언어:'Python'}] 
-// → ['JS', 'Python']
-필터: 배열에서 조건에 맞도록 맞추기 위해 새 배열을 만듦(개수에 대한 수 있음).
-// for문으로 하면 
-const  result  =  [ ] ; 
-for  ( let  i  =  0 ;  i  <  repos . length ;  i ++ )  { 
-  if  ( repos [ i ] . language  ===  activeLanguage )  { 
-    result . push ( repos [ i ] ) ; 
-  } 
+</details>
+
+### 5. GitHub API와 문의 폼
+
+<details>
+<summary>비동기 요청, 오류 처리, 입력 검증</summary>
+
+#### fetch와 async/await
+
+`fetch()`는 네트워크 요청을 보내고 Promise를 반환합니다. `async` 함수 안에서 `await`를 사용하면 응답을 기다린 뒤 다음 처리를 이어갈 수 있습니다.
+
+```js
+const response = await fetch(
+  `https://api.github.com/users/${encodeURIComponent(CONFIG.github)}/repos?sort=updated&per_page=100&page=1`
+);
+
+if (!response.ok) {
+  throw new Error(`GitHub HTTP ${response.status}`);
 }
 
-// 필터로는 한 줄 
-const  result  =  repos . 필터 ( ( repo )  =>  repo . 언어  ===  activeLanguage ) ;
-forEach: 배열을 그냥 순회만 하고 싶을 때(변환/추리기 없이, 각 요소에 뭔가를 "실행"만 할 때). 새 배열을 반환하지 않습니다.
-// [main.js:70] 메뉴 안의 링크(About, Skills...)를 하나씩 순회하며 각각에 클릭 이벤트를 연결 
-navMenu . querySelectorAll ( '.nav-link' ) . forEach ( ( 링크 )  =>  { 
-  링크 . addEventListener ( '클릭' ,  ( )  =>  { ... } ) ; 
-} ) ;
-querySelector + addEventListener 퀴즈
-3단계로 이해하면: ① 찾다 → ② 저장한다 → ③ "이 일이 일어나서 이 공격을 실행하고 싶다"라고 등록한다
+const repos = await response.json();
+```
 
-// main.js:22, 45 
-const themeToggle  =  document.querySelector  ( ' # theme-toggle' ) ; // ①② 
+실제 `loadProjects()`는 다음 페이지까지 조회하고, `try/catch/finally`로 성공·오류 상태와 화면 갱신을 처리합니다. `AbortController`는 제한 시간이 지나면 요청을 중단합니다. API에서 가져온 문자열은 `escapeHTML()`로 이스케이프한 뒤 카드에 표시합니다.
 
-테마토글 . addEventListener ( 'click' ,  ( )  =>  {                 // ③ 
-  //클릭했을 때 실제로 할 일 
-} ) ;
-querySelector('#id')— CSS 선언문으로 DOM에서 요소를 "찾기"만 함 (그 자체론 아무 일도 안 일어남)
-addEventListener('click', 콜백함수)— "이 요소에서 클릭이 발생하면 이 공격을 실행하는 것이 좋습니다"라고 브라우저에 등록되어 해두는 것입니다. 등록된 시점 콜백이 실행되고 나중에 사용자가 실제로 클릭하는 순간이 실행되었습니다.
-즉 querySelector, DOM에서 대상을 찾는데, addEventListener는 미래에 일어날 사건에 대한 반응을 미리 등록해 두는 것입니다. 그래서 등록된 코드와 실제 실행 사이에 시간차가 있습니다.
+#### 조회 흐름
 
-fetch + async/await
-fetch는 인터넷을 요청하는 전화입니다. 응답이 언제 올지 알 수 있는 "비동기"로 작동함 — 응답하는 동안 화면이 몬스터와 다른 코드로 계속 돌아옵니다.
+1. `status`를 `loading`으로 설정하고 로딩 UI를 표시합니다.
+2. 조회에 성공하면 `repos`를 저장하고 `success`로 변경합니다.
+3. 조회에 실패하면 `error`로 변경하고 재시도 버튼을 표시합니다.
+4. 저장소나 필터 결과가 없으면 빈 결과 메시지를 표시합니다.
 
-// main.js:267-277 
-const  fetchRepo  =  async  ( repoName )  =>  { 
-  const  response  =  await  fetch ( `https://api.github.com/repos/ ${ GITHUB_USERNAME } / ${ repoName } ` ) ; 
-  if  ( ! response . ok )  { 
-    throw  new  Error ( `GitHub API 오류( ${ repoName } ): ${ response . status } ` ) ; 
-  } 
-  return  response . json ( ) ; 
-} ;
-async— 이 기술 await을 좀 더 할 수 있나요?
-await— "이 작업(fetch)이 끝날 때까지 기다려라"는 뜻입니다. await없이는 아직 응답이 없는 상태의 값(Promise)만 잡힘.
-try/catch로우스( 네트워크 문제, 403 레이트리밋 등)를 기반으로 ( main.js:284-307 )
-상태 → 관리 패턴(로딩/성공/오류/비어 있음)
-todo.md 6번 목표("이벤트 →상태 변경 → DOM업데이트")의 핵심 예시. React의 상태-렌더링의 기초가 되는 개념입니다.
+#### 문의 폼 검증
 
-// main.js:158-162 
-const  projectsState  =  { 
-  status : 'loading' ,  // 'loading' | 'success' | 'error' | 'empty' 
-  repos : [ ] , 
-  activeLanguage : 'all' , 
-} ;
-흐름:
+- `input` 이벤트: 수정 중인 필드의 필수값과 이메일 형식을 검사합니다.
+- `submit` 이벤트: `event.preventDefault()`로 기본 제출을 막고 모든 필드를 검사합니다.
+- 오류 표시: 필드별 메시지와 `aria-invalid`를 갱신합니다.
+- 포커스 이동: 오류가 있으면 첫 번째 오류 필드로 이동합니다.
+- 검증 성공: 입력 확인 안내를 표시합니다. 실제 전송 기능은 연결되어 있지 않습니다.
 
-fetchProjects()호출 → status = 'loading'로 참가 renderProjects()호출 → 스피너표시
-가져오기 성공 → status = 'success', repos에 데이터 저장 → renderProjects()→ 카드 그리기
-가져오기 실패 → status = 'error'→ renderProjects()→ 순간의 메시지 + 재시도 버튼
-renderProjects()( main.js:223-262 )는 구성원 가치 만 projectsState.status보고 무엇이든 먹으려고 결심합니다:
-
-if  ( status  ===  'loading' )  {  스피너  표시 ;  반품 ;  } 
-if  ( status  ===  'error' )    {  주스 + 재시도버튼  표시 ;  반품 ;  } 
-if  ( status  ===  'empty' )    {  "없습니다"  표시 ;  반품 ;  } 
-// 성공면 실제 카드 그리기
-상태를 기록해두고, 상태가 싸울 때마다 최선을 다해 호출하여 그 상태에 맞는 화면을 그림. 모드 토글, 낚시 버튼 클릭도 전체적으로 동일한 패턴("상태 → 돔").
-
-일련의 형식
-// main.js:326-361 
-const  setFieldError  =  ( input ,  message )  =>  { 
-  const  field  =  input . closest ( '.form-field' ) ; 
-  const  errorEl  =  document . querySelector ( `# ${ input . id } -error` ) ; 
-  field . classList . toggle ( 'invalid' ,  Boolean ( message ) ) ; 
-  errorEl . textContent  =  message ; 
-} ;
-
-const  verifyField  =  ( 입력 )  =>  { 
-  const  value  =  입력 . 값 . 다듬기 ( ) ; 
-  if  ( input  ===  emailInput  &&  ! EMAIL_PATTERN . test ( value ) ) { setFieldError ( input , '올바른 이메일 형식이 아닙니다.' )  ; 거짓을 반환 ; } // ... setFieldError ( 입력 , '' ) ; 참을 반환 ; } ;
-     
-     
-  
-  
-   
-   
-원천징수: 세이 input핑할 때마다 발생하는 발생)을 입력하여 직접 받을 수 있는 자산이 있는 경우 ( main.js:365-367 )
-시 검증: submit이벤트에서 event.preventDefault()새로 고침을 막고, 세 필드를 제외하고 제출 validateField로 검사한 뒤 .every(Boolean)로 전체 통과 확인 확인 ( main.js:370-387 )
-이메일 형식은 정규표현식( EMAIL_PATTERN)으로 @와 .올바른 위치에 있는지 여부를 검사합니다.
+</details>
